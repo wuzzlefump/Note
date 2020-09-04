@@ -2,11 +2,11 @@
 let fs = require('fs')
 let express = require("express");
 let path = require("path");
-
+let db = require('./db/db.json')
+let router = express.Router()
 // set up port
 let app = express();
 let PORT = process.env.PORT || 3000;
-
 // set up middle
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -28,18 +28,16 @@ app.get("/", function(req, res) {
 
 
 app.get("/api/notes", function(req,res){
-
-  return fs.readFile(__dirname + "/db/db.json", 'utf8', function(err, data) {
-    if (err) throw err;
-    obj =JSON.parse(data)
-    res.json(obj);
-  });
-
+res.json(db)
 });
 
 
+app.post("/api/notes", function(req, res){
+let newnote = req.body
+db.push(newnote)
+res.json(db)
 
-
+})
 
 
 
