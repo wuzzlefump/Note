@@ -36,10 +36,17 @@ app.post("/api/notes", function(req, res){
 let newnote = req.body
 db.push(newnote)
 res.json(db)
+});
 
-})
-
-
+app.delete("/api/notes/:id", function(req,res){
+console.log(req.params.id)
+for(let i = 0;i<db.length;i++){
+if(req.params.id == db[i].id){
+db.splice(i,1)
+}
+}
+res.json(db)
+});
 
 
 
